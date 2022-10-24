@@ -9,7 +9,7 @@ function Card({ name, date, image, rate, id, onClick }) {
       <div>{date}</div>
       <div>{rate}</div>
       <div>
-        <Link to={`/info/${id}`}>
+        <Link to={`/info/:${id}`}>
           <img
             width="230"
             src={`https://image.tmdb.org/t/p/w500${image}`}

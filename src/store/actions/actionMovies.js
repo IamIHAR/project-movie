@@ -37,7 +37,7 @@ export const actionMovies = {
       .then((response) =>
         dispatch({
           type: actionType.SET_INFO_SUCCESS,
-          payload: response.data.videos.results,
+          payload: response.data.videos.results[0],
         })
       )
       .catch((err) => {
