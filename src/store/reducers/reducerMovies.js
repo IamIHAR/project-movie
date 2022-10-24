@@ -10,6 +10,7 @@ const initialState = {
 };
 
 export const reducerMovies = (state = initialState, action) => {
+  const uniqArr = [];
   const { payload, type } = action;
   switch (type) {
     case actionType.SET_MOVIES:
@@ -33,7 +34,7 @@ export const reducerMovies = (state = initialState, action) => {
         error: true,
       };
 
-      case actionType.SET_INFO:
+    case actionType.SET_INFO:
       return {
         ...state,
         videos: [],
@@ -56,8 +57,35 @@ export const reducerMovies = (state = initialState, action) => {
     case actionType.SET_ADD_MOVIES:
       return {
         ...state,
-        favourite: [...state.favourite, payload]
-      }
+        favourite: Array.from(new Set([...state.favourite, payload])).filter(
+          ({ id }) => {
+            if (!uniqArr.includes(id)) {
+              uniqArr.push(id);
+              return id;
+            }
+          }
+        ),
+      };
+    case actionType.SET_SEARCH:
+      return {
+        ...state,
+        movies: [],
+        succes: false,
+        loading: true,
+      };
+
+    case actionType.SET_SEARCH_SUCCES:
+      return {
+        ...state,
+        movies: payload,
+        succes: true,
+        loading: false,
+      };
+    case actionType.SET_SEARCH_ERROR:
+      return {
+        ...state,
+        error: true,
+      };
     default:
       return state;
   }

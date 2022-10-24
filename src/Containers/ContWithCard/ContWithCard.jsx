@@ -16,7 +16,7 @@ function ContWithCard() {
   const [id, setId] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const dispatch = useDispatch();
-  const { movies, succes, loading } = useSelector((state) => state.movies);
+  const { movies, succes, loading, favourite } = useSelector((state) => state.movies);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ function ContWithCard() {
       <div>
         <button onClick={handleVisible}>Genres</button>
         <Link to='/favourite'>
-          <button>favourite</button>
+          <button>favourite {favourite.length}</button>
         </Link>
         {isVisible &&
           genres.map((i) => {

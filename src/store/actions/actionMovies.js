@@ -11,6 +11,11 @@ export const actionType = {
   SET_INFO_ERROR: "SET_INFO_ERROR",
 
   SET_ADD_MOVIES: 'SET_ADD_MOVIES',
+
+  SET_SEARCH: 'SET_SEARCH',
+  SET_SEARCH_SUCCES: 'SET_SEARCH_SUCCES',
+  SET_SEARCH_ERROR: 'SET_SEARCH_ERROR',
+
 };
 
 export const actionMovies = {
@@ -45,5 +50,21 @@ export const actionMovies = {
         dispatch({ type: actionType.SET_INFO_ERROR, payload: err.response });
       });
   },
-  addMovies: (payload) => ({type: actionType.SET_ADD_MOVIES, payload})
+  addMovies: (payload) => ({type: actionType.SET_ADD_MOVIES, payload}),
+
+  getSearch: (search) => async (dispatch) => {
+    dispatch({ type: actionType.SET_SEARCH });
+    axios
+      .get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${search}`)
+      .then((response) =>
+        dispatch({
+          type: actionType.SET_SEARCH_SUCCES,
+          payload: response.data.results,
+        })
+      )
+      .catch((err) => {
+        console.log(err.response, err);
+        dispatch({ type: actionType.SET_SEARCH_ERROR, payload: err.response });
+      });
+  },
 };
